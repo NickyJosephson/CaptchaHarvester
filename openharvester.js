@@ -11,23 +11,28 @@ async function open(name,proxy){
     let proxyArg = '--proxy-server=http://'+proxyString
     let nick = false;
     console.log(proxyArg)
-    puppeteer.use(StealthPlugin())
     const width = 350
     const height = 550
-
+    puppeteer.use(StealthPlugin())
     const browser = puppeteer.launch({
-        executablePath: "./node_modules/puppeteer/.local-chromium/win64-869685/chrome-win/chrome.exe",
+        //executablePath: "./node_modules/puppeteer/.local-chromium/win64-869685/chrome-win/chrome.exe",
         excludeSwitches: [
             'enable-automation'
         ],
 	    args: [
-            '--no-sandbox',
             '--window-size=200,700',
             proxyArg,
             '--single-process',
-            '--no-zygote'
+            '--no-zygote',
+            '--no-sandbox',
+            '--disable-site-isolation-trials',
+            //'--no-first-run',
+            '--disable-blink-features=AutomationControlled',
+            //'--disable-sync',
+            //'--no-default-browser-check'
         ],
         headless: false,
+        //ignoreDefaultFlags: true,
         defaultViewport: {
             width,
             height
@@ -43,19 +48,10 @@ async function open(name,proxy){
         });
         await page.setCookie(...cookies);
         await page.setRequestInterception(true);
-        page.on('request', async (req) => {
-            if ( req.resourceType () === 'fetch' || req.resourceType () === 'image' || req.resourceType () === 'media' || req.resourceType () === 'font'  || req.resourceType () === 'stylesheet') {
-                req.abort ()
-            } else {
-                req.continue ()
-            }
-        });
+
         await openCaptcha(page)
-        //console.log(await page.content())
-        
     })
 }
 module.exports = open;
-
-open('hi','92.50.6.132:7587:C1jcGd1xqe:MFBpu5ovZl')
+open('njosephson319','92.50.6.132:7587:C1jcGd1xqe:MFBpu5ovZl')
 	    

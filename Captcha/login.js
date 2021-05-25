@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer-extra')
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 const fs = require('fs').promises;
-loadCaptcha = require('./Captcha/load')
+//loadCaptcha = require('./Captcha/load')
 async function login(name,proxy){
     async function checkLogin(url){
         if(url == 'https://youtube.com'){
@@ -20,7 +20,7 @@ async function login(name,proxy){
     console.log(proxyArg)
     puppeteer.use(StealthPlugin())
     const browser = puppeteer.launch({
-        executablePath: "./node_modules/puppeteer/.local-chromium/win64-869685/chrome-win/chrome.exe",
+        //executablePath: "./node_modules/puppeteer/.local-chromium/win64-869685/chrome-win/chrome.exe",
         excludeSwitches: [
             'enable-automation'
         ],
@@ -58,4 +58,5 @@ async function login(name,proxy){
     })
 }
 module.exports = login;
+login('njosephson319','92.50.6.132:7587:C1jcGd1xqe:MFBpu5ovZl')
 	    
