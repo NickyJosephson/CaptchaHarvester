@@ -1,7 +1,9 @@
 const puppeteer = require('puppeteer-extra')
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
+
 const fs = require('fs').promises;
-const openCaptcha = require('./Captcha/load')
+const openCaptcha = require('./hCaptcha/load')
 async function open(name,proxy){
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -11,32 +13,31 @@ async function open(name,proxy){
     let proxyArg = '--proxy-server=http://'+proxyString
     let nick = false;
     console.log(proxyArg)
-    const width = 350
+    const width = 450
     const height = 550
-    puppeteer.use(StealthPlugin())
     const browser = puppeteer.launch({
         //executablePath: "./node_modules/puppeteer/.local-chromium/win64-869685/chrome-win/chrome.exe",
-        excludeSwitches: [
-            'enable-automation'
-        ],
+        // excludeSwitches: [
+        //     'enable-automation'
+        // ],
 	    args: [
-            '--window-size=200,700',
+            '--window-size=450,700',
             proxyArg,
-            '--single-process',
-            '--no-zygote',
+            //'--single-process',
+            //'--no-zygote',
             '--no-sandbox',
             '--disable-site-isolation-trials',
-            //'--no-first-run',
+            '--no-first-run',
             '--disable-blink-features=AutomationControlled',
-            //'--disable-sync',
-            //'--no-default-browser-check'
+            '--disable-sync',
+            '--no-default-browser-check',
         ],
         headless: false,
-        //ignoreDefaultFlags: true,
-        defaultViewport: {
-            width,
-            height
-        }
+        ignoreDefaultFlags: true,
+        // defaultViewport: {
+        //     width,
+        //     height
+        // }
     }).then(async browser =>{
         const cookiesString = await fs.readFile('./SessionStorage/' + name + '.json');
         const cookies = JSON.parse(cookiesString);
@@ -47,7 +48,6 @@ async function open(name,proxy){
             password: String(proxyParams[3])
         });
         await page.setCookie(...cookies);
-        await page.setRequestInterception(true);
 
         await openCaptcha(page)
     })
