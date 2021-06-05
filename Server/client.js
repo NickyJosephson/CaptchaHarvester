@@ -11,17 +11,18 @@ socket.on("hello", async(arg) => {
 });
 socket.on("open", async(harvestername) => {
 	let proxy = harvestersinfo[harvestername].proxy
-	await openharvester(harvestername)
-	socket.emit('opened')
+	console.log(proxy)
+	await openharvester(harvestername,proxy)
+	//socket.emit('opened')
 });
-socket.on("harvesterlist", async() => {
-	socket.emit(harvesterinfo)
-});
-socket.on("login", (harvestername,proxy) => {
-	await loginharvester(harvestername,proxy)
-	socket.emit('logged-in')
-});
-socket.on("close", (harvestername) => {
-	await loginharvester(harvestername,proxy)
-	socket.emit('logged-in')
-});
+// socket.on("harvesterlist", async() => {
+// 	socket.emit(harvesterinfo)
+// });
+// socket.on("login", (harvestername,proxy) => {
+// 	await loginharvester(harvestername,proxy)
+// 	socket.emit('logged-in')
+// });
+// socket.on("close", (harvestername) => {
+// 	await loginharvester(harvestername,proxy)
+// 	socket.emit('logged-in')
+// });

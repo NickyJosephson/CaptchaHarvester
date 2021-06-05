@@ -14,8 +14,7 @@
 const app = require('express')();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-io.on('connection', () => {console.log('user connected')});
-io.on("connection", (socket) => {
-    socket.emit("hello", "world");
-  });
+io.on('connection', (socket) => {
+  socket.emit("open", 'njosephson319','92.50.6.132:7587:C1jcGd1xqe:MFBpu5ovZl');
+});
 server.listen(3000);

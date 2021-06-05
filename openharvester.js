@@ -39,7 +39,8 @@ async function open(name,proxy){
         //     height
         // }
     }).then(async browser =>{
-        const cookiesString = await fs.readFile('./SessionStorage/' + name + '.json');
+        console.log(name)
+        const cookiesString = await fs.readFile('../SessionStorage/' + name + '.json');
         const cookies = JSON.parse(cookiesString);
         const page = await browser.newPage();
         await page.setCookie(...cookies);
@@ -48,9 +49,9 @@ async function open(name,proxy){
             password: String(proxyParams[3])
         });
         /**request logic here (for each request, open either captcha or hcaptcha) */
-        await openCaptcha(page)
+        //await openCaptcha(page)
     })
 }
 module.exports = open;
-open('njosephson319','92.50.6.132:7587:C1jcGd1xqe:MFBpu5ovZl')
+//open('njosephson319','92.50.6.132:7587:C1jcGd1xqe:MFBpu5ovZl')
 	    
