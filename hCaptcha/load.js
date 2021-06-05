@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-async function loadCaptcha(page){
+async function loadCaptcha(page,url){
     var start = new Date()
 
       function sleep(ms) {
@@ -36,7 +36,7 @@ async function loadCaptcha(page){
         }
     })
 
-    await page.goto('https://lessons.zennolab.com/captchas/hcaptcha/?level=easy')
+    await page.goto(url)
     await page.waitForSelector('.h-captcha')
     console.log('hcaptcha loaded')
     await page.hover('.h-captcha')

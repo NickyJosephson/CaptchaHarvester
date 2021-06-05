@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-async function loadCaptcha(page){
+async function loadCaptcha(page,url){
     var start = new Date()
 
       function sleep(ms) {
@@ -24,17 +24,17 @@ async function loadCaptcha(page){
             console.log('got recap response')
             const recaptcharesponse = String(await response.text())
             captchatoken = ((recaptcharesponse.split(',')[1]).replace('"','')).replace('"','')
-            if(captchatoken.length < 600){
+            if(captchatoken.includes('rresp') == false){
                 console.log('GOT SUCCESFULL RECAP RESPONSE')
                 solved = true;
             }
         }
     })
-    await page.setViewport({
-      width: 315,
-      height: 80,
-    });
-    await page.goto('https://lessons.zennolab.com/captchas/recaptcha/v2_simple.php?level=high')
+    // await page.setViewport({
+    //   width: 315,
+    //   height: 80,
+    // });
+    await page.goto(url)
     await page.waitForSelector('iframe[title="reCAPTCHA"]');
     console.log('captcha loaded')
     await page.click('iframe[title="reCAPTCHA"]')

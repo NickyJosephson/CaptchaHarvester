@@ -54,9 +54,9 @@ async function login(name,proxy){
         }else{
             console.log('error saving login information')
         }
-        await browser.close()        
+        await browser.close()
+        return(cookies)     
     })
 }
 module.exports = login;
-login('njosephson319','92.50.6.132:7587:C1jcGd1xqe:MFBpu5ovZl')
 	    

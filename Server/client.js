@@ -1,17 +1,27 @@
-// I'm maintaining all active connections in this object
-const clients = {};
+const loginharvester = require('../Captcha/login')
+const harvestersinfo = require('../HarvestersInfo/harvesters.json')
+const openharvester = require('../openharvester')
 
-// This code generates unique userid for everyuser.
-const getUniqueID = () => {
-  const s4 = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-  return s4() + s4() + '-' + s4();
-};
+const io = require("socket.io-client");
 
-wsServer.on('request', function(request) {
-  var userID = getUniqueID();
-  console.log((new Date()) + ' Recieved a new connection from origin ' + request.origin + '.');
-  // You can rewrite this part of the code to accept only the requests from allowed origin
-  const connection = request.accept(null, request.origin);
-  clients[userID] = connection;
-  console.log('connected: ' + userID + ' in ' + Object.getOwnPropertyNames(clients))
+const socket = io('ws://localhost:3000')
+socket.on('connection', client => {console.log('Captcha Harvester Module Succesfully Connected to UI')});
+socket.on("hello", async(arg) => {
+	console.log(arg);
+});
+socket.on("open", async(harvestername) => {
+	let proxy = harvestersinfo[harvestername].proxy
+	await openharvester(harvestername)
+	socket.emit('opened')
+});
+socket.on("harvesterlist", async() => {
+	socket.emit(harvesterinfo)
+});
+socket.on("login", (harvestername,proxy) => {
+	await loginharvester(harvestername,proxy)
+	socket.emit('logged-in')
+});
+socket.on("close", (harvestername) => {
+	await loginharvester(harvestername,proxy)
+	socket.emit('logged-in')
 });

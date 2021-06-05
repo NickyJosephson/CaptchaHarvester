@@ -3,7 +3,7 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin())
 
 const fs = require('fs').promises;
-const openCaptcha = require('./hCaptcha/load')
+const openCaptcha = require('./captcha/load')
 async function open(name,proxy){
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -42,13 +42,12 @@ async function open(name,proxy){
         const cookiesString = await fs.readFile('./SessionStorage/' + name + '.json');
         const cookies = JSON.parse(cookiesString);
         const page = await browser.newPage();
-    
+        await page.setCookie(...cookies);
         await page.authenticate({
             username: String(proxyParams[2]),
             password: String(proxyParams[3])
         });
-        await page.setCookie(...cookies);
-
+        /**request logic here (for each request, open either captcha or hcaptcha) */
         await openCaptcha(page)
     })
 }
