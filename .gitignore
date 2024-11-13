@@ -1,2 +1,12 @@
 node_modules/
 SessionStorage/
+Captcha/
+Config/
+HarvestersInfo/
+hCaptcha/
+Server/
+SessionStorage/
+loadCaptcha.js
+main.js
+openharvester.js
+package-lock.json
