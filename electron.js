@@ -30,13 +30,13 @@ async function createWindow() {
 
 async function demoSolve(win){
     //v3 demo
-    const captchaToken = await solveCaptcha(
-        win,
-        'https://www.google.com/recaptcha/api2/demo', // The URL to load the captcha
-        'RecapV2',                                    // The captcha type ('RecapV2', 'RecapV3', or 'hCaptcha')
-        '6Le-wvkSAAAAAPBMRTvw0Q4Muexq9bi0DJwx_mJ-'
-    );
-    console.log(`Captcha Token: ${captchaToken}`);
+    // const captchaToken = await solveCaptcha(
+    //     win,
+    //     'https://www.google.com/recaptcha/api2/demo', // The URL to load the captcha
+    //     'RecapV2',                                    // The captcha type ('RecapV2', 'RecapV3', or 'hCaptcha')
+    //     '6Le-wvkSAAAAAPBMRTvw0Q4Muexq9bi0DJwx_mJ-'
+    // );
+    // console.log(`Captcha Token: ${captchaToken}`);
     //hCaptcha demo
     const hcaptchaToken = await solveCaptcha(
         win,

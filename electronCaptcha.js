@@ -140,8 +140,13 @@ export default async function solveCaptcha(captchaWindow, url, solverType = "Rec
                         case "hCaptcha":
                             if (req.url.includes("hcaptcha.com/checkcaptcha")) {
                                 callback(file);
-                                ses.protocol.uninterceptProtocol("https");
-                                resolve(String.fromCharCode(...file));
+                                const response = JSON.parse(String.fromCharCode(...file));
+                                if(response.pass == true){
+                                    ses.protocol.uninterceptProtocol("https");
+                                    resolve(response);
+                                } else {
+                                    console.log("hCaptcha not passed, retrying...");
+                                }
                             } else {
                                 callback(file);
                             }
