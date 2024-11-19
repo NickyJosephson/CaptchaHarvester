@@ -38,6 +38,13 @@ async function demoSolve(win){
     // );
     // console.log(`Captcha Token: ${captchaToken}`);
     //hCaptcha demo
+    const cloudflare = await solveCaptcha(
+        win,
+        'https://2captcha.com/demo/cloudflare-turnstile', // The URL to load the captcha
+        'cloudflare',                                    // The captcha type ('RecapV2', 'RecapV3', or 'hCaptcha')
+        '0x4AAAAAAAVrOwQWPlm3Bnr5'
+    );
+    console.log(`cloudflare Token: ${cloudflare}`)
     const hcaptchaToken = await solveCaptcha(
         win,
         'https://accounts.hcaptcha.com/demo', // The URL to load the captcha

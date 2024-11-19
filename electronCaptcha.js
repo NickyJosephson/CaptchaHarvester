@@ -1,7 +1,7 @@
 import pkg from "electron";
 const { app, BrowserWindow, session, net } = pkg;
 
-async function getCaptchaHtml(solverType, sitekey){
+async function getCaptchaHtml(solverType, sitekey, url){
     switch (solverType) {
         case "RecapV2":
             return `
@@ -45,6 +45,30 @@ async function getCaptchaHtml(solverType, sitekey){
                     <div class="h-captcha" data-sitekey="${sitekey}" data-callback="solvedCallback"></div>
                 </body>
             </html>`;
+        case 'cloudflare':
+            return `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Cloudflare Turnstile Demo</title>
+
+                <!-- Cloudflare Turnstile API -->
+                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?" defer="" async=""></script>
+            </head>
+            <body>
+                <div id="parent">
+                    <div class="turnstile_container">
+                        <div class="turnstile">
+                            <!-- CAPTCHA container with dynamic sitekey -->
+                            <div id="cf-turnstile" class="cf-turnstile" data-sitekey="${sitekey}"></div>
+                        </div>
+                    </div>
+                </div>
+            </body>
+            </html>
+            `
         default:
             throw new Error("Unsupported captcha type");
     }
@@ -52,7 +76,7 @@ async function getCaptchaHtml(solverType, sitekey){
 
 export default async function solveCaptcha(captchaWindow, url, solverType = "RecapV2", sitekey = "your-sitekey-here") {
    
-    let htmlBody = await getCaptchaHtml(solverType, sitekey);
+    let htmlBody = await getCaptchaHtml(solverType, sitekey, url);
     const ses = captchaWindow.webContents.session;
 
     //setup intercept promise
