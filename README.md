@@ -1,7 +1,7 @@
 # CAPTCHA Harvester
 
 
-A robust and efficient tool for collecting and solving CAPTCHA challenges in web applications. This harvester is designed to assist developers in bypassing CAPTCHA challenges ethically and legally by integrating with third-party services or self-solving mechanisms.
+A robust and efficient tool for collecting and solving CAPTCHA challenges in web applications. This harvester is designed to assist developers in bypassing CAPTCHA challenges ethically and legally by using self-solving mechanisms. Utilizes scheme protocol interception to help mimic a human browser.
 
 
 ## Table of Contents
